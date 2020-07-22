@@ -1,25 +1,51 @@
-import {ToyReact, Component} from "./ToyReact.js";
+import { ToyReact, Component } from "./ToyReact.js";
 
-class MyComponent extends Component{
-    mountTo(parent){
-        let vdom = this.render();
-        vdom.mountTo(parent);
+class Square extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            value : null
+        };
     }
-    setAttribute(name, value){
-        this[name] = value;
-    }
-    render(){
-        return <div>dada!</div>
+    render() {
+        return (
+            <button className="square"  onClick={()=>this.setState({value:'X'}) }>
+                {this.state.value ? this.state.value : ""}
+            </button>
+        );
     }
 }
-let a = <MyComponent id="a">
-    <span>dada!</span>
-    <div>
-        {this.children}
-    </div>
-        </MyComponent> ;
+
+class Board extends Component {
+    renderSquare(i) {
+        return <Square value={i} />;
+    }
+    render() {
+        return (
+            <div>
+                <div className="board-row">
+                    {this.renderSquare(0)}
+                    {this.renderSquare(1)}
+                    {this.renderSquare(2)}
+                </div>
+                <div className="board-row">
+                    {this.renderSquare(3)}
+                    {this.renderSquare(4)}
+                    {this.renderSquare(5)}
+                </div>
+                <div className="board-row">
+                    {this.renderSquare(6)}
+                    {this.renderSquare(7)}
+                    {this.renderSquare(8)}
+                </div>
+            </div>
+        );
+    }
+}
+
+let a = <Board/>;
 
 ToyReact.render(
     a,
     document.body
-)
+);
